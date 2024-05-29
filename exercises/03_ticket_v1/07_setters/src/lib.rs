@@ -10,27 +10,42 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
-            panic!("Title cannot be empty");
-        }
-        if title.len() > 50 {
-            panic!("Title cannot be longer than 50 characters");
-        }
-        if description.is_empty() {
-            panic!("Description cannot be empty");
-        }
-        if description.len() > 500 {
-            panic!("Description cannot be longer than 500 characters");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
+        Self::check_title(&title);
+        Self::check_description(&description);
+        Self::check_status(&status);
 
         Ticket {
             title,
             description,
             status,
         }
+    }
+
+    fn check_title(title: &String) -> bool {
+        if title.is_empty() {
+            panic!("Title cannot be empty");
+        }
+        if title.len() > 50 {
+            panic!("Title cannot be longer than 50 characters");
+        }
+        true
+    }
+
+    fn check_description(description: &String) -> bool {
+        if description.is_empty() {
+            panic!("Description cannot be empty");
+        }
+        if description.len() > 500 {
+            panic!("Description cannot be longer than 500 characters");
+        }
+        true
+    }
+
+    fn check_status(status: &String) -> bool {
+        if status != "To-Do" && status != "In Progress" && status != "Done" {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        }
+        true
     }
 
     pub fn title(&self) -> &String {
@@ -43,6 +58,24 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, new_title: String) {
+        if Self::check_title(&new_title) {
+            self.title = new_title;
+        }
+    }
+
+    pub fn set_description(&mut self, new_description: String) {
+        if Self::check_description(&new_description) {
+            self.description = new_description;
+        }
+    }
+
+    pub fn set_status(&mut self, new_status: String) {
+        if Self::check_status(&new_status) {
+            self.status = new_status;
+        }
     }
 }
 
