@@ -15,60 +15,74 @@
 pub struct Order {
     product_name: String,
     quantity: u32,
-    unit_price: f64,
+    unit_price: u32,
 }
 
 impl Order {
-    pub fn new(new_product_name: &String, new_quantity: u32, new_unit_price: f64) -> Order {
-        let mut temp_order: Order = Order {
-            product_name: new_product_name.into(),
+    pub fn new(new_product_name: String, new_quantity: u32, new_unit_price: u32) -> Order {
+        Self::check_product_name(&new_product_name);
+        Self::check_quantity(new_quantity);
+        Self::check_unit_price(new_unit_price);
+
+        Order {
+            product_name: new_product_name.to_string(),
             quantity: new_quantity,
             unit_price: new_unit_price,
-        };
-
-        temp_order.product_name(new_product_name);
-        temp_order.quantity(new_quantity);
-        temp_order.unit_price(new_unit_price);
-        temp_order
+        }
     }
 
-    pub fn product_name(&mut self, new_product_name: String) {
+    fn check_product_name(new_product_name: &String) -> bool {
         if new_product_name.is_empty() || new_product_name.len() > 300 {
             panic!("The product_name can not be empty and it can not be longer than 300 characters.");
         }
+        true
+    }
 
-        self.product_name = new_product_name;
+    pub fn product_name(&mut self, new_product_name: String) {
+        if Self::check_product_name(&new_product_name) {
+            self.product_name = new_product_name;
+        }
     }
 
     pub fn get_product_name(&self) -> &String {
         &self.product_name
     }
 
-    pub fn quantity(&mut self, new_quantity: u32) {
+    fn check_quantity(new_quantity: u32) -> bool {
         if new_quantity <= 0 {
             panic!("The quantity must be strictly greater than zero.");
         }
+        true
+    }
 
-        self.quantity = new_quantity;
+    pub fn quantity(&mut self, new_quantity: u32) {
+        if Self::check_quantity(new_quantity) {
+            self.quantity = new_quantity;
+        }
     }
 
     pub fn get_quantity(&self) -> u32 {
         self.quantity
     }
 
-    pub fn unit_price(&mut self, new_unit_price: f64) {
-        if new_unit_price <= 0.0 {
+    fn check_unit_price(new_unit_price: u32) -> bool {
+        if new_unit_price <= 0 {
             panic!("The unit_price is in cents and must be strictly gerater than zero.");
         }
-
-        self.unit_price = new_unit_price;
+        true
     }
 
-    pub fn get_unit_price(&self) -> f64 {
+    pub fn unit_price(&mut self, new_unit_price: u32) {
+        if Self::check_unit_price(new_unit_price) {
+           self.unit_price = new_unit_price;
+        }
+    }
+
+    pub fn get_unit_price(&self) -> u32 {
         self.unit_price
     }
 
-    pub fn total(&self) -> f64 {
-        self.unit_price * self.quantity as f64
+    pub fn total(&self) -> u32 {
+        self.unit_price * self.quantity
     }
 }
