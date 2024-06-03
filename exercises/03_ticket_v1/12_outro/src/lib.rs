@@ -38,13 +38,13 @@ impl Order {
         true
     }
 
-    pub fn product_name(&mut self, new_product_name: String) {
+    pub fn set_product_name(&mut self, new_product_name: String) {
         if Self::check_product_name(&new_product_name) {
             self.product_name = new_product_name;
         }
     }
 
-    pub fn get_product_name(&self) -> &String {
+    pub fn product_name(&self) -> &String {
         &self.product_name
     }
 
@@ -55,14 +55,14 @@ impl Order {
         true
     }
 
-    pub fn quantity(&mut self, new_quantity: u32) {
+    pub fn set_quantity(&mut self, new_quantity: u32) {
         if Self::check_quantity(new_quantity) {
             self.quantity = new_quantity;
         }
     }
 
-    pub fn get_quantity(&self) -> u32 {
-        self.quantity
+    pub fn quantity(&self) -> &u32 {
+        &self.quantity
     }
 
     fn check_unit_price(new_unit_price: u32) -> bool {
@@ -72,14 +72,14 @@ impl Order {
         true
     }
 
-    pub fn unit_price(&mut self, new_unit_price: u32) {
+    pub fn set_unit_price(&mut self, new_unit_price: u32) {
         if Self::check_unit_price(new_unit_price) {
            self.unit_price = new_unit_price;
         }
     }
 
-    pub fn get_unit_price(&self) -> u32 {
-        self.unit_price
+    pub fn unit_price(&self) -> &u32 {
+        &self.unit_price
     }
 
     pub fn total(&self) -> u32 {
