@@ -15,6 +15,13 @@ struct Ticket {
     status: String,
 }
 
+#[derive(Debug)]
+impl Debug for Ticket {
+    fn eq(&self, other: &Ticket) -> bool {
+        self.title == other.title && self.description == other.description && self.status == other.status
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
